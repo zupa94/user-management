@@ -9,7 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Getter
 @Setter
 @ToString(exclude = {"id", "password", "username"})
