@@ -68,12 +68,12 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(Long id){
+    public void deleteUser(String username){
 
-        if(!userRepository.existsById(id)){
-            throw new UserDoNotExistException(String.format("User with id %s do not exist.", id));
+        if(!userRepository.existsByUsername(username)){
+            throw new UserDoNotExistException(String.format("User with username %s do not exist.", username));
         }
 
-        userRepository.deleteById(id);
+        userRepository.deleteByUsername(username);
     }
 }
