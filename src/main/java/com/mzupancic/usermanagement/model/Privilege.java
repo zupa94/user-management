@@ -25,7 +25,7 @@ public class Privilege {
     private Long id;
 
     @Column(name = "name")
-    @JsonView(Views.Manage.class)
+    @JsonView({Views.Manage.class, User.Views.Manage.class})
     @NotNull
     @JsonProperty("name")
     private String name;

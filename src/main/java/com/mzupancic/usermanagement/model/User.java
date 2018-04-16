@@ -50,7 +50,7 @@ public class User {
     @Column(name = "privileges")
     @JsonView(Views.Manage.class)
     @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_privileges",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
