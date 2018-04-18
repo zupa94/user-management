@@ -1,7 +1,6 @@
 package com.mzupancic.usermanagement.service;
 
 import com.mzupancic.usermanagement.exception.EmailAlreadyExistException;
-import com.mzupancic.usermanagement.exception.PrivilegeDoesNotExistException;
 import com.mzupancic.usermanagement.exception.UserDoesNotExistException;
 import com.mzupancic.usermanagement.exception.UsernameAlreadyExistException;
 import com.mzupancic.usermanagement.model.Privilege;
@@ -13,9 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,30 +50,33 @@ public class UserService {
     }
 
     @Transactional
-    public User getUserById(final Long id){
+    public User getUserByUsername(final String username){
 
-        if(!userRepository.existsById(id)){
-            throw new UserDoesNotExistException(String.format("User with id %s does not exist.", id));
+        if(!userRepository.existsByUsername(username)){
+            throw new UserDoesNotExistException(String.format("User with username %s does not exist.", username));
         }
 
-        System.out.println(userRepository.findOneById(id));
+        System.out.println(userRepository.findOneByUsername(username));
 
-        return userRepository.findOneById(id);
+        return userRepository.findOneByUsername(username);
     }
 
     @Transactional
     public void modifyUser(User modifiedUser){
 
-        if(!userRepository.existsById(modifiedUser.getId())){
-            throw new UserDoesNotExistException(String.format("User with id %s does not exist.", modifiedUser.getId()));
+        if(!userRepository.existsByUsername(modifiedUser.getUsername())){
+            throw new UserDoesNotExistException(String.format("User with username %s does not exist.", modifiedUser.getUsername()));
         }
 
-        User user = userRepository.findOneById(modifiedUser.getId());
+        User user = userRepository.findOneByUsername(modifiedUser.getUsername());
 
         user.setFirstName(modifiedUser.getFirstName());
         user.setLastName(modifiedUser.getLastName());
         user.setUsername(modifiedUser.getUsername());
         user.setEmail(modifiedUser.getEmail());
+
+        Set<Privilege> privileges = modifiedUser.getPrivileges().stream().map(privilege -> privilegeRepository.findOneByName(privilege.getName().toUpperCase())).collect(Collectors.toSet());
+        user.setPrivileges(privileges);
 
         userRepository.save(user);
 

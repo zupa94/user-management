@@ -37,11 +37,10 @@ public class UserManagementController {
         return userRepository.findAll();
     }
 
-    //TODO path variable username
     @GetMapping("/user")
     @JsonView(User.Views.Manage.class)
-    public User getUser(@RequestParam final Long id) {
-        return userService.getUserById(id);
+    public User getUser(@RequestParam final String username) {
+        return userService.getUserByUsername(username);
     }
 
     @PostMapping("/add-user")
