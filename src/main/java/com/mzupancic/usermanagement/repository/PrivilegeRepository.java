@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
     boolean existsByName(String name);
+
     Privilege findOneByName(String name);
 }

@@ -62,11 +62,11 @@ public class User {
     @NotNull
     private String password;
 
-    public static class Views{
+    public static class Views {
         private interface Auto extends Manage {
         }
 
-        public interface Add extends Manage{
+        public interface Add extends Manage {
         }
 
         public interface Manage {

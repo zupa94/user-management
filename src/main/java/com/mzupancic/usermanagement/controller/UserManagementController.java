@@ -51,12 +51,12 @@ public class UserManagementController {
 
     @PostMapping("/modify-user")
     @JsonView(User.Views.Manage.class)
-    public void modifyUser(@RequestBody User modifiedUser){
+    public void modifyUser(@RequestBody User modifiedUser) {
         userService.modifyUser(modifiedUser);
     }
 
     @DeleteMapping("/user/{username}")
-    public void deleteUser(@PathVariable final String username){
+    public void deleteUser(@PathVariable final String username) {
         userService.deleteUser(username);
     }
 
@@ -68,7 +68,7 @@ public class UserManagementController {
 
     @PostMapping("/privilege/add")
     @JsonView(Privilege.Views.Manage.class)
-    public void addPrivilege(@RequestBody Privilege privilege){
+    public void addPrivilege(@RequestBody Privilege privilege) {
         privilegeService.addPrivilege(privilege);
     }
 

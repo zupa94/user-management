@@ -50,9 +50,9 @@ public class UserService {
     }
 
     @Transactional
-    public User getUserByUsername(final String username){
+    public User getUserByUsername(final String username) {
 
-        if(!userRepository.existsByUsername(username)){
+        if (!userRepository.existsByUsername(username)) {
             throw new UserDoesNotExistException(String.format("User with username %s does not exist.", username));
         }
 
@@ -62,9 +62,9 @@ public class UserService {
     }
 
     @Transactional
-    public void modifyUser(User modifiedUser){
+    public void modifyUser(User modifiedUser) {
 
-        if(!userRepository.existsByUsername(modifiedUser.getUsername())){
+        if (!userRepository.existsByUsername(modifiedUser.getUsername())) {
             throw new UserDoesNotExistException(String.format("User with username %s does not exist.", modifiedUser.getUsername()));
         }
 
@@ -83,9 +83,9 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(String username){
+    public void deleteUser(String username) {
 
-        if(!userRepository.existsByUsername(username)){
+        if (!userRepository.existsByUsername(username)) {
             throw new UserDoesNotExistException(String.format("User with username %s does not exist.", username));
         }
 

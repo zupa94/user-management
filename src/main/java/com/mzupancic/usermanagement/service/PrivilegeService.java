@@ -15,10 +15,10 @@ public class PrivilegeService {
     private PrivilegeRepository privilegeRepository;
 
     @Transactional
-    public void addPrivilege(Privilege privilege){
+    public void addPrivilege(Privilege privilege) {
         Privilege newPrivilege = new Privilege();
 
-        if(privilegeRepository.existsByName(privilege.getName().toUpperCase())){
+        if (privilegeRepository.existsByName(privilege.getName().toUpperCase())) {
             throw new PrivilegeAlreadyExistException(String.format("Privilege %s already exist.", privilege.getName()));
         }
         newPrivilege.setName(privilege.getName().toUpperCase());

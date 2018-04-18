@@ -35,11 +35,11 @@ public class Privilege {
     @JsonProperty("description")
     private String description;
 
-    public static class Views{
-        private interface Auto extends Manage{
+    public static class Views {
+        private interface Auto extends Manage {
         }
 
-        public interface Manage{
+        public interface Manage {
         }
     }
 
