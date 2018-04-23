@@ -2,10 +2,7 @@ package com.mzupancic.usermanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,6 +14,7 @@ import java.util.Set;
 @Setter
 @ToString(exclude = {"id", "password", "username"})
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id

@@ -8,17 +8,23 @@ import com.mzupancic.usermanagement.model.User;
 import com.mzupancic.usermanagement.repository.PrivilegeRepository;
 import com.mzupancic.usermanagement.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
@@ -90,5 +96,20 @@ public class UserService {
         }
 
         userRepository.deleteByUsername(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (!userRepository.existsByUsername(username)) {
+            throw new UserDoesNotExistException(String.format("User with username %s does not exist.", username));
+        }
+        User user = userRepository.findOneByUsername(username);
+
+        Collection<? extends GrantedAuthority> authorities = user.getPrivileges()
+                .stream()
+                .map(privilege -> new SimpleGrantedAuthority(privilege.getName().toUpperCase()))
+                .collect(Collectors.toSet());
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 }
